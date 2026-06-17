@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">PetCare Hub Logo</title>
+  <desc id="desc">A rounded pet care logo with a paw, heart, and friendly face in blue and teal.</desc>
+  <defs>
+    <linearGradient id="bg" x1="32" y1="28" x2="224" y2="228" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2f80ed" />
+      <stop offset="1" stop-color="#1db7a6" />
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="232" height="232" rx="56" fill="url(#bg)" />
+  <circle cx="128" cy="108" r="62" fill="#ffffff" opacity="0.12" />
+
+  <g fill="#ffffff">
+    <circle cx="96" cy="84" r="11" />
+    <circle cx="160" cy="84" r="11" />
+    <circle cx="78" cy="104" r="9" />
+    <circle cx="178" cy="104" r="9" />
+    <circle cx="106" cy="132" r="8" />
+    <circle cx="150" cy="132" r="8" />
+  </g>
+
+  <path
+    d="M84 118c0-24 19-44 44-44s44 20 44 44c0 13-5 25-13 34-8 9-19 14-31 14s-23-5-31-14c-8-9-13-21-13-34Z"
+    fill="#ffffff"
+  />
+  <path
+    d="M98 117c7-15 20-23 30-23s23 8 30 23"
+    fill="none"
+    stroke="#2f80ed"
+    stroke-width="10"
+    stroke-linecap="round"
+  />
+  <path
+    d="M113 138c5 5 10 7 15 7s10-2 15-7"
+    fill="none"
+    stroke="#1db7a6"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M128 165c-15-17-38-17-38 3 0 18 21 33 38 46 17-13 38-28 38-46 0-20-23-20-38-3Z"
+    fill="#ff7a6b"
+  />
+  <path
+    d="M128 171c-10-12-25-12-25 2 0 12 13 22 25 31 12-9 25-19 25-31 0-14-15-14-25-2Z"
+    fill="#ffffff"
+    opacity="0.18"
+  />
+</svg>

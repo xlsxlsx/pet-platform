@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetCare Hub</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand">
+          <img class="brand-mark" src="./assets/petcare-logo.svg" alt="PetCare Hub logo" />
+          <div>
+            <strong>PetCare Hub</strong>
+            <span>宠物服务平台</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Pages">
+          <button class="nav-item active" data-view="home" type="button">
+            <span class="nav-icon">H</span>
+            <span>工作台</span>
+          </button>
+          <button class="nav-item" data-view="services" type="button">
+            <span class="nav-icon">S</span>
+            <span>服务</span>
+          </button>
+          <button class="nav-item" data-view="shop" type="button">
+            <span class="nav-icon">M</span>
+            <span>商城</span>
+          </button>
+          <button class="nav-item" data-view="hospitals" type="button">
+            <span class="nav-icon">V</span>
+            <span>医院</span>
+          </button>
+          <button class="nav-item" data-view="orders" type="button">
+            <span class="nav-icon">O</span>
+            <span>订单</span>
+          </button>
+          <button class="nav-item" data-view="profile" type="button">
+            <span class="nav-icon">P</span>
+            <span>我的</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-status">
+          <span class="status-dot"></span>
+          <div>
+            <strong>上海长宁</strong>
+            <span>服务半径 5km</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="role-eyebrow">普通用户</p>
+            <h1 id="page-title">工作台</h1>
+          </div>
+          <div class="topbar-actions">
+            <label class="search">
+              <span>搜索</span>
+              <input id="global-search" type="search" placeholder="服务、商品、医院" />
+            </label>
+            <button class="icon-button" id="notify-button" type="button" aria-label="Notifications">!</button>
+          </div>
+        </header>
+
+        <section class="role-switcher" aria-label="Role switcher">
+          <button class="active" type="button" data-role="customer">
+            <span>普通用户</span>
+            <strong>照护和订单</strong>
+          </button>
+          <button type="button" data-role="merchant">
+            <span>店家</span>
+            <strong>商品和库存</strong>
+          </button>
+          <button type="button" data-role="hospital">
+            <span>医院</span>
+            <strong>预约管理</strong>
+          </button>
+          <button type="button" data-role="admin">
+            <span>管理员</span>
+            <strong>审核和运营</strong>
+          </button>
+        </section>
+
+        <section class="auth-panel" aria-label="登录和注册">
+          <div class="auth-copy">
+            <p class="eyebrow">账号</p>
+            <h2 id="auth-title">普通用户登录</h2>
+            <p id="auth-hint">使用手机号验证码登录，注册前需要完成网页图形验证码校验。</p>
+          </div>
+          <form class="auth-form" id="auth-form">
+            <div class="segmented auth-mode" role="tablist" aria-label="Auth mode">
+              <button class="active" type="button" data-auth-mode="login">登录</button>
+              <button type="button" data-auth-mode="register">注册</button>
+            </div>
+            <label>
+              手机号
+              <input id="auth-phone" name="phone" type="tel" inputmode="numeric" maxlength="11" pattern="^1[3-9][0-9]{9}$" placeholder="请输入手机号" value="13800000001" />
+            </label>
+            <label>
+              图形验证码
+              <span class="captcha-row">
+                <input id="auth-captcha-code" name="captchaCode" type="text" maxlength="6" placeholder="请输入图片内容" autocomplete="off" />
+                <button class="captcha-image-button" id="auth-refresh-captcha" type="button" title="刷新图形验证码">
+                  <img id="auth-captcha-image" alt="图形验证码" />
+                </button>
+              </span>
+            </label>
+            <label>
+              短信验证码
+              <span class="sms-row">
+                <input id="auth-sms-code" name="smsCode" type="text" inputmode="numeric" maxlength="6" placeholder="请输入短信验证码" autocomplete="one-time-code" />
+                <button class="secondary-button sms-button" id="auth-send-sms" type="button">发送验证码</button>
+              </span>
+            </label>
+            <label class="register-only hidden">
+              昵称
+              <input id="auth-display-name" name="displayName" type="text" placeholder="例如：米粒家长" />
+            </label>
+            <label class="register-only hidden">
+              店铺或医院名称
+              <input id="auth-organization" name="organizationName" type="text" placeholder="店家或医院注册时建议填写" />
+            </label>
+            <label class="auth-demo-toggle full">
+              <input id="auth-demo-mode" type="checkbox" />
+              后端不可用时使用本地演示会话
+            </label>
+            <button class="primary-button full-width" id="auth-submit" type="submit">登录</button>
+          </form>
+          <div class="session-card" id="session-card">
+            <span>当前会话</span>
+            <strong>未登录</strong>
+            <p>登录后会进入当前选中的角色工作台。</p>
+          </div>
+        </section>
+
+        <section class="view active" id="view-home" aria-labelledby="page-title">
+          <section class="panel role-workspace" id="role-workspace">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow" id="role-panel-eyebrow">角色工作台</p>
+                <h2 id="role-panel-title">普通用户工作台</h2>
+              </div>
+              <button class="primary-button" id="role-primary-action" type="button">创建预约</button>
+            </div>
+            <div class="role-layout">
+              <div class="role-metrics" id="role-metrics"></div>
+              <div class="role-tasks" id="role-tasks"></div>
+            </div>
+          </section>
+
+          <div class="summary-grid">
+            <article class="pet-profile">
+              <div class="pet-avatar">M</div>
+              <div>
+                <p class="eyebrow">默认宠物</p>
+                <h2>米粒</h2>
+                <p>英国短毛猫，3 岁，已绝育，上次驱虫 2026-05-20</p>
+              </div>
+              <button class="secondary-button" type="button" data-toast="宠物档案已打开">档案</button>
+            </article>
+            <article class="metric">
+              <span>照护任务</span>
+              <strong>2</strong>
+              <p>18:30 上门喂养</p>
+            </article>
+            <article class="metric">
+              <span>购物车</span>
+              <strong id="cart-count">0</strong>
+              <p>待结算商品</p>
+            </article>
+            <article class="metric">
+              <span>医院</span>
+              <strong>12</strong>
+              <p>3 家正在营业</p>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel wide">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">推荐</p>
+                  <h2>适合米粒的照护服务</h2>
+                </div>
+                <button class="text-button" data-switch="services" type="button">查看全部</button>
+              </div>
+              <div class="service-row" id="home-service-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header compact">
+                <h2>服务提醒</h2>
+              </div>
+              <ol class="timeline">
+                <li>
+                  <span>16:00</span>
+                  <p>服务者查看前确认门禁和入户说明。</p>
+                </li>
+                <li>
+                  <span>18:30</span>
+                  <p>上门喂养开始，预计服务 40 分钟。</p>
+                </li>
+                <li>
+                  <span>19:15</span>
+                  <p>服务报告将包含照片和饮水状态。</p>
+                </li>
+              </ol>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-services">
+          <div class="toolbar">
+            <div class="segmented" role="tablist" aria-label="服务类型">
+              <button class="active" type="button" data-filter="all">全部</button>
+              <button type="button" data-filter="feeding">喂养</button>
+              <button type="button" data-filter="walking">遛狗</button>
+              <button type="button" data-filter="boarding">寄养</button>
+            </div>
+            <button class="primary-button" id="open-booking" type="button">预约服务</button>
+          </div>
+          <div class="card-grid" id="service-list"></div>
+        </section>
+
+        <section class="view" id="view-shop">
+          <div class="toolbar">
+            <div>
+              <p class="eyebrow">宠物商城</p>
+              <h2>常用宠物用品</h2>
+            </div>
+            <button class="primary-button" id="checkout-button" type="button">结算购物车</button>
+          </div>
+          <div class="product-grid" id="product-list"></div>
+        </section>
+
+        <section class="view" id="view-hospitals">
+          <div class="hospital-layout">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">医院</p>
+                  <h2>附近可预约医院</h2>
+                </div>
+              </div>
+              <div class="hospital-list" id="hospital-list"></div>
+            </section>
+            <section class="map-panel" aria-label="医院地图">
+              <div class="map-grid"></div>
+              <div class="map-pin pin-a"></div>
+              <div class="map-pin pin-b"></div>
+              <div class="map-pin pin-c"></div>
+              <div class="map-label">
+                <strong>附近 5km</strong>
+                <span>接入地图后展示真实路线。</span>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-orders">
+          <div class="order-columns">
+            <section class="panel">
+              <div class="panel-header compact">
+                <h2>服务订单</h2>
+              </div>
+              <div class="order-list" id="service-orders"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header compact">
+                <h2>商城订单</h2>
+              </div>
+              <div class="order-list" id="shop-orders"></div>
+            </section>
+          </div>
+          <section class="panel ops-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">运营</p>
+                <h2>跨角色任务</h2>
+              </div>
+            </div>
+            <div class="ops-grid">
+              <article>
+                <strong>店家</strong>
+                <p>猫粮订单等待发货。</p>
+              </article>
+              <article>
+                <strong>医院</strong>
+                <p>米粒体检预约需要确认。</p>
+              </article>
+              <article>
+                <strong>管理员</strong>
+                <p>高优先级投诉需要复核。</p>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="view-profile">
+          <div class="profile-layout">
+            <section class="panel profile-main-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">个人中心</p>
+                  <h2>我的资料</h2>
+                </div>
+                <button class="primary-button" id="save-profile-button" type="button">保存资料</button>
+              </div>
+
+              <div class="profile-summary">
+                <img class="profile-avatar" id="profile-avatar-image" alt="用户头像" />
+                <div class="profile-summary-copy">
+                  <h3 id="profile-nickname-label">米粒家长</h3>
+                  <p id="profile-meta-line">普通用户 · 女 · 13800000001</p>
+                  <div class="tag-row">
+                    <span class="tag" id="profile-role-tag">普通用户</span>
+                    <span class="tag" id="profile-level-tag">白银会员</span>
+                    <span class="tag" id="profile-city-tag">上海长宁</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-stats">
+                <article>
+                  <span>订单总数</span>
+                  <strong>24</strong>
+                  <p>服务、商城与医院记录</p>
+                </article>
+                <article>
+                  <span>收藏医院</span>
+                  <strong>6</strong>
+                  <p>常用医院与复诊偏好</p>
+                </article>
+                <article>
+                  <span>照护评分</span>
+                  <strong>4.9</strong>
+                  <p>基于最近 12 次服务</p>
+                </article>
+              </div>
+
+              <div class="profile-form-grid">
+                <label>
+                  昵称
+                  <input id="profile-nickname" type="text" maxlength="24" />
+                </label>
+                <label>
+                  性别
+                  <select id="profile-gender">
+                    <option value="female">女</option>
+                    <option value="male">男</option>
+                    <option value="secret">保密</option>
+                  </select>
+                </label>
+                <label>
+                  头像风格
+                  <select id="profile-avatar-style">
+                    <option value="blue">蓝海</option>
+                    <option value="green">森林</option>
+                    <option value="orange">暖阳</option>
+                    <option value="violet">薰衣草</option>
+                  </select>
+                </label>
+                <label>
+                  手机号
+                  <input id="profile-phone" type="tel" disabled />
+                </label>
+                <label class="full">
+                  个性签名
+                  <textarea id="profile-bio" rows="3" placeholder="写下你的宠物日常、偏好服务和照护习惯。"></textarea>
+                </label>
+              </div>
+            </section>
+
+            <div class="profile-side">
+              <section class="panel">
+                <div class="panel-header compact">
+                  <div>
+                    <p class="eyebrow">订单记录</p>
+                    <h2>最近订单</h2>
+                  </div>
+                </div>
+                <div class="segmented profile-filter" role="tablist" aria-label="订单筛选">
+                  <button class="active" type="button" data-profile-order-filter="all">全部</button>
+                  <button type="button" data-profile-order-filter="service">服务</button>
+                  <button type="button" data-profile-order-filter="shop">商城</button>
+                  <button type="button" data-profile-order-filter="hospital">医院</button>
+                </div>
+                <div class="order-list" id="profile-order-list"></div>
+              </section>
+
+              <section class="panel">
+                <div class="panel-header compact">
+                  <div>
+                    <p class="eyebrow">设置</p>
+                    <h2>显示与主题</h2>
+                  </div>
+                </div>
+                <div class="settings-grid">
+                  <label class="settings-toggle">
+                    <input id="theme-toggle" type="checkbox" />
+                    <span>
+                      <strong>深色模式</strong>
+                      <small>切换明暗配色</small>
+                    </span>
+                  </label>
+                  <label class="settings-range">
+                    <span>
+                      <strong>字体大小</strong>
+                      <small>调整界面阅读舒适度</small>
+                    </span>
+                    <input id="font-scale" type="range" min="0.92" max="1.12" step="0.04" />
+                    <div class="settings-scale-labels" aria-hidden="true">
+                      <span>小</span>
+                      <span>中</span>
+                      <span>大</span>
+                    </div>
+                  </label>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="booking-dialog" id="booking-dialog">
+      <form method="dialog">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">上门服务预约</p>
+            <h2>创建服务订单</h2>
+          </div>
+          <button class="icon-button" value="cancel" aria-label="关闭" type="submit">x</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            宠物
+            <select>
+              <option>米粒 - 英国短毛猫</option>
+              <option>可乐 - 柯基</option>
+            </select>
+          </label>
+          <label>
+            服务
+            <select>
+              <option>上门喂养与猫砂清理</option>
+              <option>遛狗 45 分钟</option>
+              <option>家庭寄养咨询</option>
+            </select>
+          </label>
+          <label>
+            日期
+            <input type="date" value="2026-06-16" />
+          </label>
+          <label>
+            时间
+            <select>
+              <option>18:00 - 20:00</option>
+              <option>09:00 - 11:00</option>
+              <option>14:00 - 16:00</option>
+            </select>
+          </label>
+          <label class="full">
+            备注
+            <textarea rows="3" placeholder="食物位置、入户方式、宠物性格、紧急事项。"></textarea>
+          </label>
+        </div>
+        <div class="price-line">
+          <span>预估费用</span>
+          <strong>¥88</strong>
+        </div>
+        <button class="primary-button full-width" value="default" id="submit-booking" type="submit">提交预约</button>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
